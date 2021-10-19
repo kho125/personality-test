@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물 테스트</title>
+    <meta name="description" content="나랑 닮은 동물을 MBTI를 기반으로 추전해주는 테스트입니다.">
+    <meta property="og:type" content="website"> 
+    <meta property="og:title" content="MBTI 동물 테스트">
+    <meta property="og:description" content="나랑 닮은 동물을 MBTI를 기반으로 추전해주는 테스트입니다.">
+    <meta property="og:image" content="https://serengeti11.netlify.app/lion.jpg">
+    <meta property="og:url" content="https://serengeti11.netlify.app/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="container">
+    <article class="start">
+        <h1 class="mt-5 text-center">내가 만약 동물로 태어났다면?</h1>
+        <button type="button" class="btn btn-primary mt-5" onclick='start();'>테스트 시작하기</button>
+    </article>
+    <article class="question">
+        <div class="progress mt-5">
+            <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
+        </div>
+        <h2 id="title" class="text-center mt-5">문제</h2>
+        <input id="type" type="hidden" value="EI">
+        <button id="A" type="button" class="btn btn-primary mt-5">Primary</button>
+        <button id="B" type="button" class="btn btn-primary mt-5">Primary</button>
+    </article>
+    <article class="result">
+        <img id="img" class="rounded-circle mt-5" src="lion.jpg" alt="animal">
+        <h2 id="animal" class="text-center mt-5">동물이름</h2>
+        <h3 id="explain" class="text-center mt-5">설명</h3>
+        <!-- Go to www.addthis.com/dashboard to customize your tools --> <div class="share addthis_inline_share_toolbox"></div>
+    </article>
+    <article class="kakao_ad mt-5">
+        <ins class="kakao_ad_area" style="display:none;" 
+        data-ad-unit    = "DAN-8TY7U4i8nSsIoCc1" 
+        data-ad-width   = "320" 
+        data-ad-height  = "100"></ins> 
+    </article>
+    <a class="mt-5 banner" href="https://www.codelion.net/catalog/Q291cnNlTm9kZTpqbW9r?utm_source=animal_test&utm_medium=web_lecture&utm_campaign=kyeongho94">
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <input type="hidden" id="EI" value="0">
+    <input type="hidden" id="SN" value="0">
+    <input type="hidden" id="TF" value="0">
+    <input type="hidden" id="JP" value="0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        let num = 1;
+        let q = {
+            1: {"title": "Q1. 어디로 여행갈까?", "type": "EI", "A": "파티가 쿵작쿵작 매일 같이 열리는 뉴욕으로 간다.", "B": "조용하고 한적한 몰디브 가서 모히토 마신다"},
+            2: {"title": "Q2. 누군가가 실수를 했을 때 뭐라 말해줄까?", "type": "EI", "A": "위로해주되 정확히 분석하여 앞으로는 그러지 않게 도와준다.", "B": "위로해주면서 공감을 해준다"},
+            3: {"title": "Q3. 감동적인 영화를 볼 때 나는?", "type": "EI", "A": "오! 정말 영화 잘 만들었네 한번 더 봐야겠어!", "B": "흑흑흫흫규규흐흫규ㅠㅠ"},
+
+            4: {"title": "Q4. 애인: 우리 내일 여행가자나 계획세워보자! 나의 대답은?", "type": "SN", "A": "이때는 여기 가서 이걸 먹고 그다음으로 택시를 타서 어디로 간뒤에 여기서는 이걸 사진찍고(등등)", "B": "(까먹음)우리 어디 가기로 했지?"},
+            5: {"title": "Q5. 나의 수다 떠는 스타일은?", "type": "SN", "A": "어묵탕 하나 시키고 소주 들이키며 수다", "B": "조용히 친구들과 카페 가서 커피 한잔 마시며 수다"},
+            6: {"title": "Q6. 여행지에서 관광상품을 사 가려고 한다. 나는?", "type": "SN", "A": "정말로 필요한 물품들을 사 간다.", "B": "기왕 여행 온 거 관광지 특유의 관광상품을 사 간다(Ex.돌하르방 모형)"},
+
+            7: {"title": "Q7. 10년 만에 친구한테 뭐하냐고 연락이 왔다. 나의 속마음은?", "type": "TF", "A": "(뭐지?)반갑다 오랜만이야!", "B": "(어머머 웬일이야)반갑다 오랜만이야!"},
+            8: {"title": "Q8. 친구랑 약속을 잡았다. 약속 시간이 다가오는 상태에서 나는?", "type": "TF", "A": "약속 시간 2시간 전부터 준비하여 대중교통 막히는 거까지 고려해서 출발하여 늦지 않게 나간다.", "B": "(친구가 영상통화로 나온거 확인 후)그제야 준비하고 나간다."},
+            9: {"title": "Q9. 모르는 사람들과 파티를 한다. 그 상황에서 나는?", "type": "TF", "A": "같이 술 마시며 분위기를 휘어 잡는다.", "B": "조용히 뒤에 있다가 속으로 에잇! 하고 그냥 자러 간다."},
+
+            10: {"title": "Q10. 자고 일어났더니 낯선 환경에 내가 있다는 이런 상황일 때 나는?", "type": "JP", "A": "기왕 이렇게 된거 그 상황을 즐긴다.", "B": "즐기기보단 앞으로의 상황을 생각해 살 수 있는 궁리를 한다."},
+            11: {"title": "Q11. 오늘 친한 친구와 싸웠다. 자기 전의 행동은?", "type": "JP", "A": "졸리니까 일단 자자...", "B": "나도 모르게 잠들기 전까지 생각하다 잠든다."},
+            12: {"title": "Q12. 친구랑 여행 중에 친구가 아침에 일어나지 않아 계획에 차질이 생긴다. 이때의 나는?", "type": "JP", "A": "계획은 절대 바꿀 수 없으므로 친구를 어떻게든 깨워서 간다.", "B": "아몰랑~ 같이 잔다."}
+        }
+        let result = {
+            "ISTJ": {"animal": "코뿔소", "explain": "가장 다수의 사람이 속하는 성격 유형으로 재빠르고 신중하며 조직에서 핵심 구성원 역할", "img": "코뿔소.jpg"},
+            "ISFJ": {"animal": "사슴", "explain": "조용하고 내성적이며 가족에 대한 애착이 강하며 인간관계 형성이 뛰어난 이타주의자", "img": "사슴.jpg"},
+            "INFJ": {"animal": "판다", "explain": "가장 흔치 않은 성격 유형으로 섬세하고 조용하고 신비로움", "img": "판다.jpg"},
+            "INTJ": {"animal": "호랑이", "explain": "주로 남성한테 나타나는 유형으로 호기심이 많고 용의주도한 전략가 유형", "img": "호랑이.jpg"},
+            "ISTP": {"animal": "곰", "explain": "주변을 탐색하는 것을 좋아하는 호기심쟁이", "img": "곰.jpg"},
+            "ISFP": {"animal": "고양이", "explain": "탐험이나 실험 정신이 뛰어난 만능 재주꾼", "img": "고양이.jpg"},
+            "INFP": {"animal": "앵무새", "explain": "언어적 소질이 뛰어난 긍정적인 이상주의자", "img": "앵무새.jpg"},
+            "INTP": {"animal": "부엉이", "explain": "몽상을 좋아하는 사색가", "img": "부엉이.jpg"},
+            "ESTP": {"animal": "공작새", "explain": "주변의 이목을 끄는 것을 좋아하는 모험가", "img": "공작새.jpg"},
+            "ESFP": {"animal": "돌고래", "explain": "흥이 많고 스타성을 타고난 자유로운 영혼", "img": "돌고래.jpg"},
+            "ENFP": {"animal": "원숭이", "explain": "자유를 즐기고 타인을 즐겁게 해주는 사교적인 타입", "img": "원숭이.jpg"},
+            "ENTP": {"animal": "여우", "explain": "자유분방한 사고로 상대를 꿰뚫고 주변을 아군으로 만드는 스타일", "img": "여우.jpg"},
+            "ESTJ": {"animal": "보더콜리", "explain": "질서를 중시하며 군중을 단결시키는 관리자 유형", "img": "보더콜리.jpg"},
+            "ESFJ": {"animal": "말", "explain": "주의 사람들과 잘 어울리는 인기쟁이", "img": "말.jpg"},
+            "ENFJ": {"animal": "코끼리", "explain": "사이좋은 공동체를 만드는 것에 행복을 느끼는 열정가", "img": "코끼리.jpg"},
+            "ENTJ": {"animal": "멋쟁이 사자", "explain": "천성적으로 타고난 리더상으로 카리스마와 자신감이 넘치는 통솔자", "img": "lion.jpg"}
+        }
+        function start() {
+            $(".start").hide();
+            $(".question").show();
+            next();
+        }
+        $("#A").click(function(){
+            let type = $("#type").val();
+            let preValue = $("#"+type).val();
+            $("#"+type).val(parseInt(preValue)+1);
+            next();
+        });
+        $("#B").click(function(){
+            next();
+        });
+        function next() {
+            if (num == 13) {
+                $(".question").hide();
+                $(".result").show();
+                let mbti = "";
+                ($("#EI").val() < 2) ? mbti+="I" : mbti+="E";
+                ($("#SN").val() < 2) ? mbti+="N" : mbti+="S";
+                ($("#TF").val() < 2) ? mbti+="F" : mbti+="T";
+                ($("#JP").val() < 2) ? mbti+="P" : mbti+="J";
+                $("#img").attr("src",result[mbti]["img"]);
+                $("#animal").html(result[mbti]["animal"]);
+                $("#explain").html(result[mbti]["explain"]);
+            } else {
+                $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+                num++;
+            }
+        }
+    </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-604981af2fe1d4e4"></script>
+</body>
+</html>
